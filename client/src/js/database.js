@@ -20,27 +20,24 @@ export const putDb = async (content) => {
   const transaction = db.transaction('jate', 'readwrite');
   const store = transaction.objectStore('jate');
 
-  const result = await store.add({note: content})
+  const result = await store.put({id: 1, value: content});
 
-  return result;
-
-  //use callback to catch error
-  console.error('putDb not implemented');}
-
-
-
+  console.log(result)
+  // return result;
+}
 
 // TODO: Add logic for a method that gets all the content from the database
 export const getDb = async () => {
   
-  const group_db = await openDB('groups', 1)
-  const transaction = group_db.transaction('groups', 'readwrite');
-  const store = transaction.objectStore('groups'); //like a collection
+  const db = await openDB('jate', 1)
+  const transaction = db.transaction('jate', 'readonly');
+  const store = transaction.objectStore('jate'); //like a collection
+  const result = await store.get(1);
 
-  return await store.getAll();
+  return result?.value
+  // return await store.getAll();
   
-  //use call back to catch errors
-  console.error('getDb not implemented')};
+}
+
 
 initdb();
-
